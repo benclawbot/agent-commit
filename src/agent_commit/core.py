@@ -114,9 +114,9 @@ def _get_db_path() -> Path:
     return home / DEFAULT_DB_NAME
 
 
-def _init_db(db_path: Optional[Path] = None) -> sqlite3.Connection:
+def _init_db(db_path: Optional[Path | str] = None) -> sqlite3.Connection:
     """Initialize the SQLite database, creating tables if needed."""
-    path = db_path or _get_db_path()
+    path = Path(db_path) if db_path else _get_db_path()
     path.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(path), check_same_thread=False)
     conn.execute("PRAGMA journal_mode=WAL")
@@ -145,7 +145,7 @@ def _init_db(db_path: Optional[Path] = None) -> sqlite3.Connection:
 class CommitStore:
     """Thread-safe commit store backed by SQLite."""
 
-    def __init__(self, db_path: Optional[Path] = None):
+    def __init__(self, db_path: Optional[Path | str] = None):
         self._lock = threading.RLock()
         self._conn = _init_db(db_path)
 
