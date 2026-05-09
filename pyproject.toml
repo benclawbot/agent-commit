@@ -1,0 +1,18 @@
+[project]
+name = "agent-commit"
+version = "0.1.0"
+description = "Version control for AI reasoning — every LLM turn gets a content-addressed, queryable commit ID"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+classifiers = ["Development Status :: 3 - Alpha"]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
